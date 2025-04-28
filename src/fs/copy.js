@@ -17,7 +17,7 @@ const copy = async () => {
             throw new Error("either files dir does not exist or files_copy already created");
         }
     } catch (error) {
-        throw new Error(error)
+        throw new Error('FS operation failed')
     }
 
 };
