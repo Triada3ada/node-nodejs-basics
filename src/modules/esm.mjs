@@ -1,16 +1,26 @@
-const path = require('path');
-const { release, version } = require('os');
-const { createServer: createServerHttp } = require('http');
-require('./files/c.cjs');
+import * as path from 'node:path'
+import {release, version} from 'os'
+import { createServer } from 'node:http'
+import * as fs from 'fs';
+import { fileURLToPath } from 'url';
+
+import * as cjs from './files/c.cjs'
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+const ajs = JSON.parse(fs.readFileSync(`${__dirname}` + './files/a.json'))
+const bjs = JSON.parse(fs.readFileSync(`${__dirname}` + './files/b.json'))
+
+const createServerHttp = createServer;
 
 const random = Math.random();
 
 let unknownObject;
 
 if (random > 0.5) {
-    unknownObject = require('./files/a.json');
+    unknownObject = ajs;
 } else {
-    unknownObject = require('./files/b.json');
+    unknownObject = bjs;
 }
 
 console.log(`Release ${release()}`);
